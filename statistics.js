@@ -1,3 +1,16 @@
+var id = 999;
+const allFood = [];
+
+function Food(name, type, price) {
+    this.Id = ++id;
+    this.name = name;
+    this.type = type;
+    this.price = price;
+
+    allFood.push(this);
+
+}
+
 var tEl = document.getElementById("table");
 
 Food.prototype.render = function () {
@@ -21,31 +34,50 @@ Food.prototype.render = function () {
     trEl.appendChild(tdPrice);
 
 
-
 }
 
+let f1 = new Food("Pizza", "Fat", 8.35);
+let f2 = new Food("Burger", "Fat", 4.25);
+let f3 = new Food("Apple", "Fruit", 0.63);
 
-
-
-
-
-function saveData(data) {
-    let stringObj = JSON.stringify(data);
-    localStorage.setItem("allFood", stringObj)
+for (let i = 0; i < allFood.length; i++) {
+    allFood[i].render();
 }
+
+// f1.render();
+// f2.render();
+// f3.render();
+
+
+let arrayData = [];
+
+// ----------------------------------------------------------------------------------------------
 
 function getData() {
-    let retrieveData = localStorage.getItem('allFood')
+    let retrieveData = localStorage.getItem('Food');
     console.log(retrieveData);
-    let arrayData = JSON.parse(retrieveData);
+    arrayData = JSON.parse(retrieveData);
     console.log(arrayData);
-
-    for(let i = 0 ; i < arrayData.length ; i++){
-        new FontFaceSetLoadEvent(arrayData[i]);
-    }
-
-    for(let i = 0 ; i < arrayData.length ; i++) {
-        arrayData[i].render();
-    }
 }
+
+// ----------------------------------------------------------------------------------------------
+
+for (let i = 0; i < arrayData.length; i++) {
+    new Food(
+        arrayData[i].name,
+        arrayData[i].type,
+        arrayData[i].price,
+    );
+
+
+}
+
+
+
+
 getData();
+
+
+
+console.log(allFood);
+
