@@ -1,4 +1,4 @@
-var id = 0;
+var id = 999;
 
 function uniqeId() {
     ++id;
