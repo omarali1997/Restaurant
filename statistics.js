@@ -1,5 +1,6 @@
 var id = 999;
 const allFood = [];
+let tEl = document.getElementById("tableID");
 
 function Food(name, type, price) {
     this.Id = ++id;
@@ -11,27 +12,26 @@ function Food(name, type, price) {
 
 }
 
-var tEl = document.getElementById("table");
 
 Food.prototype.render = function () {
-    let trEl = document.createElement('tr');
-    tEl.appendChild(trEl);
+    let tr = document.createElement("tr");
+    tEl.appendChild(tr);
 
-    let tdId = document.createElement('td');
+    let tdId = document.createElement("td");
     tdId.textContent = this.Id;
-    trEl.appendChild(tdId);
+    tr.appendChild(tdId);
 
-    let tdName = document.createElement('td');
+    let tdName = document.createElement("td");
     tdName.textContent = this.name;
-    trEl.appendChild(tdName);
+    tr.appendChild(tdName);
 
-    let tdType = document.createElement('td');
+    let tdType = document.createElement("td");
     tdType.textContent = this.type;
-    trEl.appendChild(tdType);
+    tr.appendChild(tdType);
 
-    let tdPrice = document.createElement('td');
+    let tdPrice = document.createElement("td");
     tdPrice.textContent = this.price;
-    trEl.appendChild(tdPrice);
+    tr.appendChild(tdPrice);
 
 
 }
@@ -40,8 +40,10 @@ let f1 = new Food("Pizza", "Fat", 8.35);
 let f2 = new Food("Burger", "Fat", 4.25);
 let f3 = new Food("Apple", "Fruit", 0.63);
 
-for (let i = 0; i < allFood.length; i++) {
-    allFood[i].render();
+function renderAll() {
+    for (let i = 0; i < allFood.length; i++) {
+        allFood[i].render();
+    }
 }
 
 // f1.render();
@@ -54,30 +56,25 @@ let arrayData = [];
 // ----------------------------------------------------------------------------------------------
 
 function getData() {
-    let retrieveData = localStorage.getItem('Food');
-    console.log(retrieveData);
-    arrayData = JSON.parse(retrieveData);
+    let retrievedData = localStorage.getItem('Food');
+    console.log(retrievedData);
+    arrayData = JSON.parse(retrievedData);
     console.log(arrayData);
 }
 
 // ----------------------------------------------------------------------------------------------
 
-for (let i = 0; i < arrayData.length; i++) {
-    new Food(
-        arrayData[i].name,
-        arrayData[i].type,
-        arrayData[i].price,
-    );
-
-
+if (arrayData != null) {
+    for (let i = 0; i < arrayData.length; i++) {
+        if (allFood[i]?.name !== arrayData[i].name) {
+            new Food(
+                arrayData[i].name,
+                arrayData[i].type,
+                arrayData[i].price,
+            )
+        }
+    }
+    renderAll();
 }
 
-
-
-
 getData();
-
-
-
-console.log(allFood);
-
